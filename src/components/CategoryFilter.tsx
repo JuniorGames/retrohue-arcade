@@ -9,7 +9,7 @@ interface CategoryFilterProps {
 const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterProps) => {
   return (
     <div className="overflow-x-auto pb-4 scrollbar-hide">
-      <div className="flex gap-2 md:gap-3 min-w-max px-4 md:px-0">
+      <div className="flex gap-2 md:gap-3 min-w-max px-4 md:px-0 justify-center">
         {categories.map((category) => (
           <button
             key={category.id}
