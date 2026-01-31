@@ -1,14 +1,14 @@
-import { Gamepad2, Play, Sparkles } from 'lucide-react';
+import { Gamepad2, Play } from 'lucide-react';
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
+<section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-8">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
       
-      {/* Floating Icons */}
-      <div className="absolute left-4 md:left-10 top-1/4 opacity-20">
+      {/* Floating Icons - Full visibility */}
+      <div className="absolute left-4 md:left-10 top-1/4">
         <img 
           src="https://rahuehue-online.pages.dev/docs/huehue.png" 
           alt=""
@@ -16,7 +16,7 @@ const HeroSection = () => {
           style={{ animationDelay: '0s' }}
         />
       </div>
-      <div className="absolute right-4 md:right-10 top-1/3 opacity-20">
+      <div className="absolute right-4 md:right-10 top-1/3">
         <img 
           src="https://rahuehue-online.pages.dev/docs/jr.png" 
           alt=""
@@ -28,12 +28,6 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 mb-6 animate-fade-in">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm text-primary font-medium">Powered by EmulatorJS</span>
-          </div>
-
           {/* Logo */}
           <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <img 
@@ -79,7 +73,7 @@ const HeroSection = () => {
               className="btn-arcade px-8 py-4 rounded-xl flex items-center gap-3 text-base"
             >
               <Gamepad2 className="w-5 h-5" />
-              Jogar Agora
+              RAHueHue Online
             </a>
             <a
               href="https://play.webrcade.com/?feed=https://tinyurl.com/retrohue"
