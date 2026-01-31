@@ -119,7 +119,7 @@ export const consoles: Console[] = [
   {
     id: 'webrcade-huehue',
     name: 'WebRcade HueHue',
-    icon: 'https://play.webrcade.com/images/app/logo-192x192.png',
+    icon: '/webrcade-huehue-icon.png',
     listUrl: 'https://huehue.webrcade.com/',
     category: 'webrcade' as any
   }
