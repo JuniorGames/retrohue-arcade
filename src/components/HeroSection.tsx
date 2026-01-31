@@ -1,4 +1,4 @@
-import { Gamepad2, Play } from 'lucide-react';
+import { Gamepad2, Play, Youtube } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -7,20 +7,20 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
       
-      {/* Floating Icons - Full visibility, same height */}
-      <div className="absolute left-4 md:left-10 top-1/4">
+      {/* Floating Icons - Hidden on mobile/tablet, visible on desktop only */}
+      <div className="absolute left-4 md:left-10 top-1/4 hidden lg:block">
         <img 
           src="https://rahuehue-online.pages.dev/docs/huehue.png" 
           alt=""
-          className="w-32 md:w-48 animate-float"
+          className="w-40 xl:w-56 animate-float"
           style={{ animationDelay: '0s' }}
         />
       </div>
-      <div className="absolute right-4 md:right-10 top-1/4">
+      <div className="absolute right-4 md:right-10 top-1/4 hidden lg:block">
         <img 
           src="https://rahuehue-online.pages.dev/docs/jr.png" 
           alt=""
-          className="w-32 md:w-48 animate-float"
+          className="w-40 xl:w-56 animate-float"
           style={{ animationDelay: '1.5s' }}
         />
       </div>
@@ -42,22 +42,22 @@ const HeroSection = () => {
             className="font-arcade text-3xl md:text-5xl lg:text-6xl font-bold mb-4 text-glow animate-fade-in"
             style={{ animationDelay: '0.2s' }}
           >
-            <span className="text-primary">RETRO</span>
+            <span className="text-foreground">RETRO</span>
             <span className="text-foreground">GAMES</span>
           </h1>
           <h2 
             className="font-pixel text-xl md:text-3xl mb-8 animate-fade-in"
             style={{ animationDelay: '0.3s' }}
           >
-            <span className="text-neon-cyan">H</span>
-            <span className="text-neon-yellow">U</span>
-            <span className="text-primary">E</span>
-            <span className="text-neon-cyan">H</span>
-            <span className="text-neon-yellow">U</span>
-            <span className="text-primary">E</span>
+            <span className="text-blue-600">H</span>
+            <span className="text-neon-yellow">u</span>
+            <span className="text-primary">e</span>
+            <span className="text-blue-600">H</span>
+            <span className="text-neon-yellow">u</span>
+            <span className="text-primary">e</span>
             {' '}
-            <span className="text-primary">B</span>
-            <span className="text-neon-yellow">R</span>
+            <span className="text-neon-yellow">B</span>
+            <span className="text-primary">R</span>
           </h2>
 
           {/* Description */}
@@ -75,6 +75,15 @@ const HeroSection = () => {
             style={{ animationDelay: '0.5s' }}
           >
             <a
+              href="https://www.youtube.com/@juniorgameslives"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-arcade px-8 py-4 rounded-xl flex items-center gap-3 text-base"
+            >
+              <Youtube className="w-5 h-5" />
+              Junior Games
+            </a>
+            <a
               href="https://rahuehue-online.pages.dev"
               target="_blank"
               rel="noopener noreferrer"
@@ -87,11 +96,10 @@ const HeroSection = () => {
               href="https://play.webrcade.com/?feed=https://tinyurl.com/retrohue"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 rounded-xl border-2 border-primary/50 text-primary font-arcade font-semibold
-                       hover:bg-primary/10 hover:border-primary transition-all duration-300 flex items-center gap-3"
+              className="btn-arcade px-8 py-4 rounded-xl flex items-center gap-3 text-base"
             >
               <Play className="w-5 h-5" />
-              WebRcade
+              WebRcade HueHue
             </a>
           </div>
 

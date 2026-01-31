@@ -18,34 +18,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            <a 
-              href="https://rahuehue-online.pages.dev" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              Emulador
-            </a>
-            <a 
-              href="https://rahuehue-online.pages.dev/lists/RAHueHue%20Online" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              Lista de Jogos
-            </a>
-            <a 
-              href="https://play.webrcade.com/?feed=https://tinyurl.com/retrohue" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              WebRcade
-            </a>
-          </div>
-
           {/* YouTube Channel */}
           <a 
             href="https://www.youtube.com/@juniorgameslives"
@@ -62,9 +34,6 @@ const Footer = () => {
         <div className="mt-8 pt-6 border-t border-border/30 text-center">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} RetroGames HueHue. Todos os jogos são propriedade de seus respectivos donos.
-          </p>
-          <p className="text-xs text-muted-foreground mt-2">
-            Powered by <span className="text-primary">EmulatorJS</span> • Inspirado por <span className="text-primary">WebRcade</span>
           </p>
         </div>
       </div>
