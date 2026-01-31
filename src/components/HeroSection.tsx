@@ -114,7 +114,7 @@ const HeroSection = () => {
               <div className="text-sm text-muted-foreground mt-1">Consoles</div>
             </div>
             <div className="text-center">
-              <div className="font-arcade text-2xl md:text-3xl text-neon-cyan text-glow-sm">1000+</div>
+              <div className="font-arcade text-2xl md:text-3xl text-neon-cyan text-glow-sm">5000+</div>
               <div className="text-sm text-muted-foreground mt-1">Jogos</div>
             </div>
             <div className="text-center">
