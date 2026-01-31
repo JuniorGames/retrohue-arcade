@@ -2,7 +2,6 @@ import { useState } from 'react';
 import HeroSection from '@/components/HeroSection';
 import CategoryFilter from '@/components/CategoryFilter';
 import ConsoleGrid from '@/components/ConsoleGrid';
-import QuickLinks from '@/components/QuickLinks';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -39,9 +38,6 @@ const Index = () => {
           searchQuery="" 
           selectedCategory={selectedCategory} 
         />
-
-        {/* Quick Links */}
-        <QuickLinks />
       </main>
 
       {/* Footer */}
