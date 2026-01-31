@@ -10,7 +10,7 @@ const ConsoleCard = ({ console: consoleData, index }: ConsoleCardProps) => {
   return (
     <a
       href={consoleData.listUrl}
-      className="group card-retro rounded-xl p-4 md:p-6 flex flex-col items-center text-center cursor-pointer animate-fade-in"
+      className="group card-retro rounded-xl p-4 md:p-6 flex flex-col items-center text-center cursor-pointer animate-fade-in w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.5rem)] md:w-[calc(25%-1rem)] lg:w-[calc(20%-1rem)] xl:w-[calc(16.666%-1rem)]"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
       {/* Console Icon */}
