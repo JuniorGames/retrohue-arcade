@@ -1,4 +1,5 @@
 import { Gamepad2, Play, Youtube } from 'lucide-react';
+import headerLogo from '@/assets/retrogames-header-logo.png';
 
 const HeroSection = () => {
   return (
@@ -31,9 +32,9 @@ const HeroSection = () => {
           {/* Logo */}
           <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <img 
-              src="https://rahuehue-online.pages.dev/icons/rahue.png" 
+              src={headerLogo}
               alt="RetroGames HueHue"
-              className="w-24 h-24 md:w-32 md:h-32 mx-auto drop-shadow-2xl"
+              className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto drop-shadow-2xl object-contain"
             />
           </div>
 
