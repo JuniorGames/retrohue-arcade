@@ -1,4 +1,4 @@
-import { Heart, Gamepad2 } from 'lucide-react';
+import { Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -46,13 +46,16 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Credits */}
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Feito com</span>
-            <Heart className="w-4 h-4 text-destructive fill-destructive animate-pulse" />
-            <span>para a comunidade</span>
-            <Gamepad2 className="w-4 h-4 text-primary" />
-          </div>
+          {/* YouTube Channel */}
+          <a 
+            href="https://www.youtube.com/@juniorgameslives"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
+          >
+            <Youtube className="w-5 h-5 text-destructive" />
+            <span>Junior Games Lives</span>
+          </a>
         </div>
 
         {/* Copyright */}

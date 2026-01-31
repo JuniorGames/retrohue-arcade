@@ -7,7 +7,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
       
-      {/* Floating Icons - Full visibility */}
+      {/* Floating Icons - Full visibility, same height */}
       <div className="absolute left-4 md:left-10 top-1/4">
         <img 
           src="https://rahuehue-online.pages.dev/docs/huehue.png" 
@@ -16,7 +16,7 @@ const HeroSection = () => {
           style={{ animationDelay: '0s' }}
         />
       </div>
-      <div className="absolute right-4 md:right-10 top-1/3">
+      <div className="absolute right-4 md:right-10 top-1/4">
         <img 
           src="https://rahuehue-online.pages.dev/docs/jr.png" 
           alt=""
@@ -46,10 +46,18 @@ const HeroSection = () => {
             <span className="text-foreground">GAMES</span>
           </h1>
           <h2 
-            className="font-pixel text-lg md:text-2xl text-neon-yellow mb-8 animate-fade-in"
+            className="font-pixel text-xl md:text-3xl mb-8 animate-fade-in"
             style={{ animationDelay: '0.3s' }}
           >
-            HUEHUE BR
+            <span className="text-neon-cyan">H</span>
+            <span className="text-neon-yellow">U</span>
+            <span className="text-primary">E</span>
+            <span className="text-neon-cyan">H</span>
+            <span className="text-neon-yellow">U</span>
+            <span className="text-primary">E</span>
+            {' '}
+            <span className="text-primary">B</span>
+            <span className="text-neon-yellow">R</span>
           </h2>
 
           {/* Description */}
