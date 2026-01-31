@@ -10,8 +10,6 @@ const ConsoleCard = ({ console: consoleData, index }: ConsoleCardProps) => {
   return (
     <a
       href={consoleData.listUrl}
-      target="_blank"
-      rel="noopener noreferrer"
       className="group card-retro rounded-xl p-4 md:p-6 flex flex-col items-center text-center cursor-pointer animate-fade-in"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
