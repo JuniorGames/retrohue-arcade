@@ -12,6 +12,10 @@ const ConsoleGrid = ({ searchQuery, selectedCategory }: ConsoleGridProps) => {
   const filteredConsoles = useMemo(() => {
     return consoles.filter((console) => {
       const matchesSearch = console.name.toLowerCase().includes(searchQuery.toLowerCase());
+      // WebRcade only shows in "all" category
+      if (console.id === 'webrcade-huehue') {
+        return selectedCategory === 'all' && matchesSearch;
+      }
       const matchesCategory = selectedCategory === 'all' || console.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });

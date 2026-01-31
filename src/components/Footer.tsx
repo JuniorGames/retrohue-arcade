@@ -1,4 +1,5 @@
 import { Youtube } from 'lucide-react';
+import retrogamesLogo from '@/assets/retrogames-huehue-logo.png';
 
 const Footer = () => {
   return (
@@ -8,9 +9,9 @@ const Footer = () => {
           {/* Logo & Brand */}
           <div className="flex items-center gap-4">
             <img 
-              src="https://rahuehue-online.pages.dev/docs/huehue.png" 
-              alt="HueHue"
-              className="w-10 h-10"
+              src={retrogamesLogo}
+              alt="RetroGames HueHue"
+              className="w-12 h-12 object-contain"
             />
             <div>
               <h3 className="font-arcade text-sm text-primary">RetroGames HueHue</h3>
@@ -33,7 +34,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-8 pt-6 border-t border-border/30 text-center">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} RetroGames HueHue. Todos os jogos são propriedade de seus respectivos donos.
+            © {new Date().getFullYear()} RetroGames HueHue. Jogue onde estiver no seu dispositivo pelo Navegador de Internet.
           </p>
         </div>
       </div>
