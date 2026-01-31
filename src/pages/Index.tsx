@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import CategoryFilter from '@/components/CategoryFilter';
 import ConsoleGrid from '@/components/ConsoleGrid';
@@ -7,13 +6,10 @@ import QuickLinks from '@/components/QuickLinks';
 import Footer from '@/components/Footer';
 
 const Index = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   return (
     <div className="min-h-screen bg-background relative scanlines">
-      {/* Header */}
-      <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
       {/* Hero Section */}
       <HeroSection />
@@ -40,7 +36,7 @@ const Index = () => {
 
         {/* Console Grid */}
         <ConsoleGrid 
-          searchQuery={searchQuery} 
+          searchQuery="" 
           selectedCategory={selectedCategory} 
         />
 
