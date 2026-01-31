@@ -114,6 +114,14 @@ export const consoles: Console[] = [
     icon: 'https://rahuehue-online.pages.dev/lists/icons/Playstation.png',
     listUrl: 'https://rahuehue-online.pages.dev/lists/Playstation.html',
     category: 'sony'
+  },
+  // WebRcade - Special entry (only shows in "all")
+  {
+    id: 'webrcade-huehue',
+    name: 'WebRcade HueHue',
+    icon: 'https://play.webrcade.com/favicon.ico',
+    listUrl: 'https://huehue.webrcade.com/',
+    category: 'webrcade' as any
   }
 ];
 
