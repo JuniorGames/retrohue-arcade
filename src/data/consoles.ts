@@ -1,4 +1,5 @@
 // Console and game data from RAHueHue Online
+import webrcadeIcon from '@/assets/webrcade-huehue-icon.png';
 
 export interface Console {
   id: string;
@@ -119,7 +120,7 @@ export const consoles: Console[] = [
   {
     id: 'webrcade-huehue',
     name: 'WebRcade HueHue',
-    icon: '/webrcade-huehue-icon.png',
+    icon: webrcadeIcon,
     listUrl: 'https://play.webrcade.com/?feed=https://tinyurl.com/retrohue',
     category: 'webrcade' as any
   }

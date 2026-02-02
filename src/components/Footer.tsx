@@ -15,7 +15,7 @@ const Footer = () => {
             />
             <div>
               <h3 className="font-arcade text-sm text-primary">RetroGames HueHue</h3>
-              <p className="text-xs text-muted-foreground">Junior Games</p>
+              <p className="text-xs text-muted-foreground">Editado por Junior Games</p>
             </div>
           </div>
 
