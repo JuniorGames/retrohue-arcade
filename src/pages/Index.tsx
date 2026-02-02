@@ -43,13 +43,6 @@ const Index = () => {
       {/* Footer */}
       <Footer />
 
-      {/* Background Audio (optional) */}
-      <audio id="background-music" loop className="hidden">
-        <source 
-          src="https://rahuehue-online.pages.dev/lists/sounds/HueHueBR.mp3" 
-          type="audio/mpeg" 
-        />
-      </audio>
     </div>
   );
 };

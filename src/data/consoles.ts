@@ -9,14 +9,6 @@ export interface Console {
   category: 'arcade' | 'nintendo' | 'sega' | 'atari' | 'sony' | 'handheld';
 }
 
-export interface Game {
-  id: string;
-  name: string;
-  console: string;
-  consoleId: string;
-  thumbnail: string;
-  romUrl?: string;
-}
 
 export const consoles: Console[] = [
   // Arcade
@@ -136,30 +128,3 @@ export const categories = [
   { id: 'handheld', name: 'Portáteis', icon: '📱' }
 ];
 
-// Featured games for the hero section
-export const featuredGames = [
-  {
-    id: 'street-fighter-2',
-    name: 'Street Fighter II',
-    console: 'Arcade - Capcom',
-    thumbnail: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&q=80'
-  },
-  {
-    id: 'sonic',
-    name: 'Sonic The Hedgehog',
-    console: 'Mega Drive',
-    thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&q=80'
-  },
-  {
-    id: 'super-mario',
-    name: 'Super Mario Bros.',
-    console: 'Nintendo',
-    thumbnail: 'https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=400&q=80'
-  },
-  {
-    id: 'pokemon',
-    name: 'Pokémon',
-    console: 'GameBoy Color',
-    thumbnail: 'https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?w=400&q=80'
-  }
-];
