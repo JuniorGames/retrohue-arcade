@@ -27,7 +27,7 @@ const Footer = () => {
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
           >
             <Youtube className="w-5 h-5 text-destructive" />
-            <span>Junior Games Lives</span>
+            <span>Canal Junior Games</span>
           </a>
         </div>
 
