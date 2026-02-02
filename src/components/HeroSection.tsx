@@ -34,7 +34,7 @@ const HeroSection = () => {
             <img 
               src={headerLogo}
               alt="RetroGames HueHue"
-              className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto drop-shadow-2xl object-contain"
+              className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto drop-shadow-2xl object-contain animate-logo-float"
             />
           </div>
 
@@ -44,7 +44,7 @@ const HeroSection = () => {
             style={{ animationDelay: '0.2s' }}
           >
             <span className="text-foreground">RETRO</span>
-            <span className="text-foreground">GAMES</span>
+            <span className="text-foreground">&nbsp;GAMES</span>
           </h1>
           <h2 
             className="font-pixel text-xl md:text-3xl mb-8 animate-fade-in"
@@ -56,9 +56,6 @@ const HeroSection = () => {
             <span className="text-blue-600">H</span>
             <span className="text-neon-yellow">u</span>
             <span className="text-primary">e</span>
-            {' '}
-            <span className="text-neon-yellow">B</span>
-            <span className="text-primary">R</span>
           </h2>
 
           {/* Description */}
