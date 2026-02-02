@@ -21,7 +21,7 @@ const Index = () => {
             <span className="text-primary">Escolha</span> seu Console
           </h2>
           <p className="text-muted-foreground">
-            Navegue pelas plataformas e encontre seus jogos favoritos
+            Navegue pelas plataformas e encontre seus jogos favoritos.
           </p>
         </div>
 
