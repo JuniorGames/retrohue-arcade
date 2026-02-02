@@ -1,4 +1,4 @@
-import { Gamepad2, Play, Youtube } from 'lucide-react';
+import { Gamepad2, Youtube } from 'lucide-react';
 import headerLogo from '@/assets/retrogames-header-logo.png';
 
 const HeroSection = () => {
@@ -99,7 +99,7 @@ const HeroSection = () => {
               rel="noopener noreferrer"
               className="btn-arcade px-8 py-4 rounded-xl flex items-center gap-3 text-base"
             >
-              <Play className="w-5 h-5" />
+              <Gamepad2 className="w-5 h-5" />
               WebRcade HueHue
             </a>
           </div>
