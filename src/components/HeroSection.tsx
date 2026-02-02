@@ -67,7 +67,7 @@ const HeroSection = () => {
             style={{ animationDelay: '0.4s' }}
           >
             Deguste o melhor dos jogos retrô! Arcade, Nintendo, Sega, PlayStation e muito mais. 
-            Jogue diretamente no seu navegador sem downloads.
+            Jogue diretamente no seu navegador sem instalar nada.
           </p>
 
           {/* CTA Buttons */}
@@ -111,7 +111,7 @@ const HeroSection = () => {
           >
             <div className="text-center">
               <div className="font-arcade text-2xl md:text-3xl text-primary text-glow-sm">13+</div>
-              <div className="text-sm text-muted-foreground mt-1">Consoles</div>
+              <div className="text-sm text-muted-foreground mt-1">Plataformas</div>
             </div>
             <div className="text-center">
               <div className="font-arcade text-2xl md:text-3xl text-neon-cyan text-glow-sm">5000+</div>
