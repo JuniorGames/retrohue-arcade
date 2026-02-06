@@ -1,10 +1,10 @@
 import { Gamepad2, Youtube } from 'lucide-react';
-import headerLogo from '@/assets/retrogames-header-logo.png';
 import pixQrCode from '@/assets/pix-qrcode.jpeg';
+import jrAvatar from '@/assets/jr-avatar.png';
 
 const HeroSection = () => {
   return (
-<section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-8">
+    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-8">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
@@ -20,8 +20,8 @@ const HeroSection = () => {
       </div>
       <div className="absolute right-4 md:right-10 top-1/4 hidden lg:block">
         <img 
-          src="https://rahuehue-online.pages.dev/docs/jr.png" 
-          alt=""
+          src={jrAvatar}
+          alt="Junior Games"
           className="w-80 xl:w-[28rem] animate-float"
           style={{ animationDelay: '1.5s' }}
         />
@@ -30,14 +30,6 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
-          {/* Logo */}
-          <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            <img 
-              src={headerLogo}
-              alt="RetroGames HueHue"
-              className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto drop-shadow-2xl object-contain animate-logo-float"
-            />
-          </div>
 
           {/* Title */}
           <h1 
