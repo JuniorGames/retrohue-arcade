@@ -10,15 +10,14 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
       
       {/* Floating Icons - Hidden on mobile/tablet, visible on desktop only */}
-      <div className="absolute left-2 xl:left-8 top-8 hidden lg:block">
+      <div className="absolute left-2 xl:left-8 top-16 hidden lg:block">
         <img 
           src="https://rahuehue-online.pages.dev/docs/huehue.png" 
           alt=""
           className="w-56 xl:w-72 animate-float"
-          style={{ animationDelay: '0s' }}
         />
       </div>
-      <div className="absolute right-2 xl:right-8 top-8 hidden lg:block">
+      <div className="absolute right-2 xl:right-8 top-16 hidden lg:block">
         <img 
           src={jrAvatar}
           alt="Junior Games"
