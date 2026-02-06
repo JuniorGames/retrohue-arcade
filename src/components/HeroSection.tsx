@@ -1,6 +1,7 @@
 import { Gamepad2, Youtube } from 'lucide-react';
 import pixQrCode from '@/assets/pix-qrcode.jpeg';
 import jrAvatar from '@/assets/jr-avatar.png';
+import huehueIcon from '@/assets/huehue-icon.png';
 
 const HeroSection = () => {
   return (
@@ -10,18 +11,18 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
       
       {/* Floating Icons - Hidden on mobile/tablet, visible on desktop only */}
-      <div className="absolute left-2 xl:left-8 top-16 hidden lg:block">
+      <div className="absolute left-4 xl:left-12 top-20 hidden lg:block">
         <img 
-          src="https://rahuehue-online.pages.dev/docs/huehue.png" 
-          alt=""
-          className="w-56 xl:w-72 animate-float"
+          src={huehueIcon}
+          alt="HueHue"
+          className="w-52 xl:w-64 animate-float"
         />
       </div>
-      <div className="absolute right-2 xl:right-8 top-16 hidden lg:block">
+      <div className="absolute right-4 xl:right-12 top-20 hidden lg:block">
         <img 
           src={jrAvatar}
           alt="Junior Games"
-          className="w-56 xl:w-72 animate-float"
+          className="w-52 xl:w-64 animate-float"
           style={{ animationDelay: '1.5s' }}
         />
       </div>
