@@ -1,5 +1,6 @@
 import { Gamepad2, Youtube } from 'lucide-react';
 import headerLogo from '@/assets/retrogames-header-logo.png';
+import pixQrCode from '@/assets/pix-qrcode.jpeg';
 
 const HeroSection = () => {
   return (
@@ -47,7 +48,7 @@ const HeroSection = () => {
             <span className="text-foreground">&nbsp;GAMES</span>
           </h1>
           <h2 
-            className="font-pixel text-xl md:text-3xl mb-8 animate-fade-in"
+            className="font-pixel text-xl md:text-3xl mb-8 animate-fade-in tracking-[0.3em]"
             style={{ animationDelay: '0.3s' }}
           >
             <span className="text-blue-600">H</span>
@@ -57,6 +58,24 @@ const HeroSection = () => {
             <span className="text-neon-yellow">u</span>
             <span className="text-primary">e</span>
           </h2>
+
+          {/* PIX Donation Section */}
+          <div 
+            className="mb-8 animate-fade-in flex flex-col items-center"
+            style={{ animationDelay: '0.35s' }}
+          >
+            <p className="text-muted-foreground text-sm md:text-base mb-3">
+              Doe na chave pix se puder e quiser! Muito obrigado!
+            </p>
+            <img 
+              src={pixQrCode}
+              alt="QR Code PIX"
+              className="w-32 h-32 md:w-40 md:h-40 rounded-lg border-2 border-primary/30"
+            />
+            <p className="text-primary font-mono text-xs md:text-sm mt-2">
+              jrgameslives@gmail.com
+            </p>
+          </div>
 
           {/* Description */}
           <p 
