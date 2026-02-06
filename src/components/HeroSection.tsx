@@ -14,7 +14,7 @@ const HeroSection = () => {
         <img 
           src="https://rahuehue-online.pages.dev/docs/huehue.png" 
           alt=""
-          className="w-40 xl:w-56 animate-float"
+          className="w-80 xl:w-[28rem] animate-float"
           style={{ animationDelay: '0s' }}
         />
       </div>
@@ -22,7 +22,7 @@ const HeroSection = () => {
         <img 
           src="https://rahuehue-online.pages.dev/docs/jr.png" 
           alt=""
-          className="w-40 xl:w-56 animate-float"
+          className="w-80 xl:w-[28rem] animate-float"
           style={{ animationDelay: '1.5s' }}
         />
       </div>
