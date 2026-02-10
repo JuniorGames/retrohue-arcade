@@ -72,16 +72,16 @@ const RomLinkPlayer = () => {
         {/* Header */}
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <Globe className="w-6 h-6 text-neon-cyan" />
+            <Globe className="w-6 h-6 text-primary" />
             <h2 className="font-arcade text-lg md:text-2xl text-foreground">
-              <span className="text-neon-cyan">Jogos</span> via Link Online
+              <span className="text-primary">Jogos</span> via Link Online
             </h2>
-            <Globe className="w-6 h-6 text-neon-cyan" />
+            <Globe className="w-6 h-6 text-primary" />
           </div>
           <p className="text-muted-foreground text-sm md:text-base">
             Cole o link direto de uma ROM e jogue diretamente no navegador.
             <br />
-            <span className="text-neon-cyan/70 text-xs">
+            <span className="text-primary/70 text-xs">
               Ideal para Xbox Series/One via Edge — sem necessidade de download!
             </span>
           </p>
@@ -92,11 +92,11 @@ const RomLinkPlayer = () => {
           <label className="block text-sm font-arcade text-muted-foreground mb-2">
             Console / Plataforma
           </label>
-          <div className="relative">
+           <div className="relative">
             <select
               value={selectedCore}
               onChange={(e) => setSelectedCore(e.target.value)}
-              className="w-full h-12 rounded-xl border-2 border-border bg-secondary/50 text-foreground px-4 pr-10 font-arcade text-sm appearance-none cursor-pointer focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors"
+              className="w-full h-12 rounded-xl border-2 border-primary/50 bg-black text-white px-4 pr-10 font-arcade text-sm appearance-none cursor-pointer focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             >
               {CORES.map((core) => (
                 <option key={core.id} value={core.id}>
@@ -138,7 +138,7 @@ const RomLinkPlayer = () => {
       {isPlaying && (
         <div className="fixed inset-0 z-[9999] bg-black flex flex-col">
           <div className="flex items-center justify-between px-4 py-2 bg-card border-b border-border">
-            <span className="font-arcade text-sm text-neon-cyan">
+            <span className="font-arcade text-sm text-primary">
               EmulatorJS — {CORES.find(c => c.id === selectedCore)?.name}
             </span>
             <button
