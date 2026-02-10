@@ -2,6 +2,7 @@ import { useState } from 'react';
 import HeroSection from '@/components/HeroSection';
 import CategoryFilter from '@/components/CategoryFilter';
 import ConsoleGrid from '@/components/ConsoleGrid';
+import RomLinkPlayer from '@/components/RomLinkPlayer';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -39,6 +40,8 @@ const Index = () => {
           selectedCategory={selectedCategory} 
         />
       </main>
+      {/* ROM Link Player */}
+      <RomLinkPlayer />
 
       {/* Footer */}
       <Footer />
