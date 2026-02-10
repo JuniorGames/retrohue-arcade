@@ -96,7 +96,7 @@ const RomLinkPlayer = () => {
             <select
               value={selectedCore}
               onChange={(e) => setSelectedCore(e.target.value)}
-              className="w-full h-12 rounded-xl border-2 border-primary/50 bg-black text-white px-4 pr-10 font-arcade text-sm appearance-none cursor-pointer focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className="w-full h-12 rounded-xl border-2 border-primary/50 bg-black text-white px-4 pr-10 font-arcade text-sm appearance-none cursor-pointer focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors [&>option]:bg-black [&>option]:text-white [&>option:checked]:bg-primary [&>option:checked]:text-primary-foreground [&>option:hover]:bg-primary"
             >
               {CORES.map((core) => (
                 <option key={core.id} value={core.id}>
@@ -104,7 +104,7 @@ const RomLinkPlayer = () => {
                 </option>
               ))}
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-primary pointer-events-none" />
           </div>
         </div>
 
