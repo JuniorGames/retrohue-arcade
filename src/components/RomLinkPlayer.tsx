@@ -29,13 +29,18 @@ const CORES = [
 
 const RomLinkPlayer = () => {
   const [romUrl, setRomUrl] = useState('');
-  const [selectedCore, setSelectedCore] = useState('psp');
+  const [selectedCore, setSelectedCore] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const handlePlay = () => {
-    if (!romUrl.trim()) return;
+    if (!romUrl.trim() || !selectedCore) return;
+    if (selectedCore === 'psp') {
+      const encodedUrl = encodeURIComponent(romUrl.trim());
+      window.open(`https://demo.emulatorjs.org/#psp&${encodedUrl}`, '_blank');
+      return;
+    }
     setIsPlaying(true);
   };
 
@@ -99,9 +104,9 @@ const RomLinkPlayer = () => {
             <button
               type="button"
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="w-full h-12 rounded-xl border-2 border-primary/50 bg-black text-white px-4 pr-10 font-arcade text-sm text-left cursor-pointer focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className={`w-full h-12 rounded-xl border-2 border-primary/50 bg-black px-4 pr-10 font-arcade text-sm text-left cursor-pointer focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors ${selectedCore ? 'text-white' : 'text-muted-foreground/50'}`}
             >
-              {selectedCoreName}
+              {selectedCore ? selectedCoreName : 'Escolha seu console...'}
             </button>
             <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-primary pointer-events-none transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
             {dropdownOpen && (
@@ -135,7 +140,7 @@ const RomLinkPlayer = () => {
           />
           <button
             onClick={handlePlay}
-            disabled={!romUrl.trim()}
+            disabled={!romUrl.trim() || !selectedCore}
             className="btn-arcade h-14 px-8 rounded-xl flex items-center justify-center gap-2 text-base disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
           >
             <Play className="w-5 h-5" />
