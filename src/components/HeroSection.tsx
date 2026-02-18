@@ -57,7 +57,7 @@ const HeroSection = () => {
             style={{ animationDelay: '0.35s' }}
           >
             <p className="text-muted-foreground text-sm md:text-base mb-3">
-              Doe na chave pix se puder e quiser! Muito obrigado!
+              Contribua se quiser! Muito Obrigado!
             </p>
             <img 
               src={pixQrCode}
