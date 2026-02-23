@@ -1,6 +1,6 @@
 // Console and game data from RAHueHue Online
 import webrcadeIcon from '@/assets/webrcade-huehue-icon.png';
-import emulatorjsIcon from '@/assets/emulatorjs-icon.png';
+
 
 export interface Console {
   id: string;
@@ -117,14 +117,6 @@ export const consoles: Console[] = [
     listUrl: 'https://play.webrcade.com/?feed=https://tinyurl.com/retrohue',
     category: 'webrcade' as any
   },
-  // EmulatorJS - Special entry (only shows in "all")
-  {
-    id: 'emulatorjs',
-    name: 'EmulatorJS',
-    icon: emulatorjsIcon,
-    listUrl: 'https://demo.emulatorjs.org',
-    category: 'emulatorjs' as any
-  }
 ];
 
 export const categories = [
