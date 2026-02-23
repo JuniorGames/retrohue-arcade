@@ -19,7 +19,7 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
               "border whitespace-nowrap",
               selectedCategory === category.id
                 ? "bg-primary text-primary-foreground border-primary shadow-neon"
-                : "bg-card border-border hover:border-primary/50 hover:bg-card/80 text-foreground"
+                : "bg-card border-border hover:border-primary/50 hover:bg-card/80 text-foreground hover:shadow-[0_0_15px_rgba(0,255,100,0.3)] hover:text-primary"
             )}
           >
             <span className="text-lg">{category.icon}</span>
