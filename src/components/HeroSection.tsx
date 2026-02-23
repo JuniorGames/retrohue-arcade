@@ -74,8 +74,7 @@ const HeroSection = () => {
             className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in"
             style={{ animationDelay: '0.4s' }}
           >
-            Deguste o melhor dos jogos retrô! Arcade, Nintendo, Sega, PlayStation e muito mais. 
-            Jogue diretamente no seu navegador sem instalar nada.
+            Deguste o melhor dos jogos retrô diretamente no seu navegador sem instalar nada.
           </p>
 
           {/* CTA Buttons */}
