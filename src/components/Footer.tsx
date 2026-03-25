@@ -1,26 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Youtube, Eye } from 'lucide-react';
+import { Youtube } from 'lucide-react';
 import retrogamesLogo from '@/assets/retrogames-huehue-logo.png';
 
-const COUNTER_KEY = 'retrogames_visit_count';
-const VISITED_KEY = 'retrogames_has_visited';
-
 const Footer = () => {
-  const [visitCount, setVisitCount] = useState<number>(0);
-
-  useEffect(() => {
-    const stored = localStorage.getItem(COUNTER_KEY);
-    let count = stored ? parseInt(stored, 10) : 0;
-
-    if (!sessionStorage.getItem(VISITED_KEY)) {
-      count += 1;
-      sessionStorage.setItem(VISITED_KEY, 'true');
-      localStorage.setItem(COUNTER_KEY, count.toString());
-    }
-
-    setVisitCount(count);
-  }, []);
-
   return (
     <footer className="border-t border-border/50 mt-16">
       <div className="container mx-auto px-4 py-8">
@@ -38,14 +19,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Visitor Counter */}
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-2 text-primary">
-              <Eye className="w-4 h-4" />
-              <span className="font-arcade text-sm">{visitCount.toLocaleString()}</span>
-            </div>
-            <p className="text-[10px] text-muted-foreground">Visitantes</p>
-          </div>
+
 
           {/* YouTube Channel */}
           <a 
