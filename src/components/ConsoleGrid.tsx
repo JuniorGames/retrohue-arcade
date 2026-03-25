@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { consoles } from '@/data/consoles';
 import ConsoleCard from './ConsoleCard';
-import { Gamepad2 } from 'lucide-react';
 
 interface ConsoleGridProps {
   selectedCategory: string;
