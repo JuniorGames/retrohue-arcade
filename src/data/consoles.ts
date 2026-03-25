@@ -7,7 +7,7 @@ export interface Console {
   name: string;
   icon: string;
   listUrl: string;
-  category: 'arcade' | 'nintendo' | 'sega' | 'atari' | 'sony' | 'handheld';
+  category: 'arcade' | 'nintendo' | 'sega' | 'atari' | 'sony' | 'handheld' | 'webrcade';
 }
 
 
