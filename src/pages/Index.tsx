@@ -34,14 +34,8 @@ const Index = () => {
         </div>
 
         {/* Console Grid */}
-        <ConsoleGrid 
-          searchQuery="" 
-          selectedCategory={selectedCategory} 
-        />
+        <ConsoleGrid selectedCategory={selectedCategory} />
       </main>
-
-
-
       {/* Important Notice */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex items-start gap-2 justify-center text-center py-4 px-3 rounded-md border border-neon-yellow/30 bg-neon-yellow/5">

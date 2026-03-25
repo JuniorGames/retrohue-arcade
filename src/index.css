@@ -215,62 +215,8 @@
   50% { transform: translateY(-30px); }
 }
 
-@keyframes logo-float {
-  0%, 100% { 
-    transform: translateY(0); 
-    opacity: 1;
-  }
-  50% { 
-    transform: translateY(30px); 
-    opacity: 0;
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px hsl(var(--neon-green) / 0.4);
-  }
-  50% { 
-    box-shadow: 0 0 40px hsl(var(--neon-green) / 0.6), 0 0 60px hsl(var(--neon-green) / 0.3);
-  }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
 .animate-float {
   animation: float 3s ease-in-out infinite;
-}
-
-.animate-logo-float {
-  animation: logo-float 3s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    hsl(var(--neon-green) / 0.1) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
 }
 
 /* Custom scrollbar */

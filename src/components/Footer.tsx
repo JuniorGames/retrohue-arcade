@@ -20,7 +20,6 @@ const Footer = () => {
           </div>
 
 
-
           {/* YouTube Channel */}
           <a 
             href="https://www.youtube.com/@juniorgameslives"

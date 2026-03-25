@@ -1,34 +1,27 @@
 import { useMemo } from 'react';
 import { consoles } from '@/data/consoles';
 import ConsoleCard from './ConsoleCard';
-import { Gamepad2 } from 'lucide-react';
 
 interface ConsoleGridProps {
-  searchQuery: string;
   selectedCategory: string;
 }
 
-const ConsoleGrid = ({ searchQuery, selectedCategory }: ConsoleGridProps) => {
+const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   const filteredConsoles = useMemo(() => {
     return consoles.filter((console) => {
-      const matchesSearch = console.name.toLowerCase().includes(searchQuery.toLowerCase());
-      // WebRcade only shows in "all" category
       if (console.id === 'webrcade-huehue') {
-        return selectedCategory === 'all' && matchesSearch;
+        return selectedCategory === 'all';
       }
-      const matchesCategory = selectedCategory === 'all' || console.category === selectedCategory;
-      return matchesSearch && matchesCategory;
+      return selectedCategory === 'all' || console.category === selectedCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [selectedCategory]);
 
   if (filteredConsoles.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <Gamepad2 className="w-16 h-16 text-muted-foreground mb-4" />
+        <span className="text-5xl mb-4">🎮</span>
         <h3 className="font-arcade text-xl text-foreground mb-2">Nenhum console encontrado</h3>
-        <p className="text-muted-foreground">
-          Tente buscar por outro termo ou selecione outra categoria
-        </p>
+        <p className="text-muted-foreground">Selecione outra categoria</p>
       </div>
     );
   }

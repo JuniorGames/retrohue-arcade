@@ -1,13 +1,11 @@
-// Console and game data from RAHueHue Online
 import webrcadeIcon from '@/assets/webrcade-huehue-icon.png';
-
 
 export interface Console {
   id: string;
   name: string;
   icon: string;
   listUrl: string;
-  category: 'arcade' | 'nintendo' | 'sega' | 'atari' | 'sony' | 'handheld';
+  category: 'arcade' | 'nintendo' | 'sega' | 'atari' | 'sony' | 'handheld' | 'webrcade';
 }
 
 
@@ -115,7 +113,7 @@ export const consoles: Console[] = [
     name: 'WebRcade HueHue',
     icon: webrcadeIcon,
     listUrl: 'https://play.webrcade.com/?feed=https://tinyurl.com/retrohue',
-    category: 'webrcade' as any
+    category: 'webrcade'
   },
 ];
 
