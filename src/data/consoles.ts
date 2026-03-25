@@ -115,7 +115,7 @@ export const consoles: Console[] = [
     name: 'WebRcade HueHue',
     icon: webrcadeIcon,
     listUrl: 'https://play.webrcade.com/?feed=https://tinyurl.com/retrohue',
-    category: 'webrcade' as any
+    category: 'webrcade'
   },
 ];
 
