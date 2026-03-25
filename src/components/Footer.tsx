@@ -19,14 +19,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Visitor Counter */}
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-2 text-primary">
-              <Eye className="w-4 h-4" />
-              <span className="font-arcade text-sm">{visitCount.toLocaleString()}</span>
-            </div>
-            <p className="text-[10px] text-muted-foreground">Visitantes</p>
-          </div>
+
 
           {/* YouTube Channel */}
           <a 
