@@ -19,11 +19,9 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   if (filteredConsoles.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <Gamepad2 className="w-16 h-16 text-muted-foreground mb-4" />
+        <span className="text-5xl mb-4">🎮</span>
         <h3 className="font-arcade text-xl text-foreground mb-2">Nenhum console encontrado</h3>
-        <p className="text-muted-foreground">
-          Tente buscar por outro termo ou selecione outra categoria
-        </p>
+        <p className="text-muted-foreground">Selecione outra categoria</p>
       </div>
     );
   }
