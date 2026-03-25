@@ -34,10 +34,7 @@ const Index = () => {
         </div>
 
         {/* Console Grid */}
-        <ConsoleGrid 
-          searchQuery="" 
-          selectedCategory={selectedCategory} 
-        />
+        <ConsoleGrid selectedCategory={selectedCategory} />
       </main>
 
 
