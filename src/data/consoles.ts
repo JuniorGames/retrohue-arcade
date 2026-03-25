@@ -1,6 +1,4 @@
-// Console and game data from RAHueHue Online
 import webrcadeIcon from '@/assets/webrcade-huehue-icon.png';
-
 
 export interface Console {
   id: string;
