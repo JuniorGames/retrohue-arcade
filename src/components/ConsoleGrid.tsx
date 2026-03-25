@@ -4,22 +4,18 @@ import ConsoleCard from './ConsoleCard';
 import { Gamepad2 } from 'lucide-react';
 
 interface ConsoleGridProps {
-  searchQuery: string;
   selectedCategory: string;
 }
 
-const ConsoleGrid = ({ searchQuery, selectedCategory }: ConsoleGridProps) => {
+const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   const filteredConsoles = useMemo(() => {
     return consoles.filter((console) => {
-      const matchesSearch = console.name.toLowerCase().includes(searchQuery.toLowerCase());
-      // WebRcade only shows in "all" category
       if (console.id === 'webrcade-huehue') {
-        return selectedCategory === 'all' && matchesSearch;
+        return selectedCategory === 'all';
       }
-      const matchesCategory = selectedCategory === 'all' || console.category === selectedCategory;
-      return matchesSearch && matchesCategory;
+      return selectedCategory === 'all' || console.category === selectedCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [selectedCategory]);
 
   if (filteredConsoles.length === 0) {
     return (
