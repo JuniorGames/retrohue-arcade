@@ -93,11 +93,13 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
     if (!el || filteredConsoles.length === 0) return;
 
     const singleSetWidth = filteredConsoles.length * step;
+    const lowerBound = singleSetWidth * (middleSet - 1);
+    const upperBound = singleSetWidth * (middleSet + 1);
 
-    if (el.scrollLeft < singleSetWidth) {
-      el.scrollLeft += singleSetWidth * 2;
-    } else if (el.scrollLeft > singleSetWidth * 4) {
-      el.scrollLeft -= singleSetWidth * 2;
+    if (el.scrollLeft < lowerBound) {
+      el.scrollLeft += singleSetWidth;
+    } else if (el.scrollLeft > upperBound) {
+      el.scrollLeft -= singleSetWidth;
     }
 
     updateCenter();
