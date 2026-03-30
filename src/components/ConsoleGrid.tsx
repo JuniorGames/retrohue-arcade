@@ -43,8 +43,13 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   }, [selectedCategory]);
 
   const repeated = useMemo(() => {
+    if (filteredConsoles.length === 0) return [];
+    // Ensure we have enough items to fill the screen many times over
+    const minItems = Math.max(50, filteredConsoles.length * 5);
     const copies = [];
-    for (let i = 0; i < 5; i++) copies.push(...filteredConsoles);
+    while (copies.length < minItems) {
+      copies.push(...filteredConsoles);
+    }
     return copies;
   }, [filteredConsoles]);
 
@@ -56,12 +61,15 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
     setCenterIndex(Math.max(0, Math.min(idx, repeated.length - 1)));
   }, [filteredConsoles.length, repeated.length, itemWidth, step]);
 
+  const totalSets = Math.ceil(repeated.length / Math.max(filteredConsoles.length, 1));
+  const middleSet = Math.floor(totalSets / 2);
+
   const scrollToMiddle = useCallback(() => {
     const el = scrollRef.current;
     if (!el || filteredConsoles.length === 0) return;
-    const middleStart = filteredConsoles.length * 2;
+    const middleStart = middleSet * filteredConsoles.length;
     el.scrollLeft = middleStart * step - el.clientWidth / 2 + itemWidth / 2;
-  }, [filteredConsoles.length, step, itemWidth]);
+  }, [filteredConsoles.length, step, itemWidth, middleSet]);
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -85,11 +93,13 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
     if (!el || filteredConsoles.length === 0) return;
 
     const singleSetWidth = filteredConsoles.length * step;
+    const lowerBound = singleSetWidth * (middleSet - 1);
+    const upperBound = singleSetWidth * (middleSet + 1);
 
-    if (el.scrollLeft < singleSetWidth) {
-      el.scrollLeft += singleSetWidth * 2;
-    } else if (el.scrollLeft > singleSetWidth * 4) {
-      el.scrollLeft -= singleSetWidth * 2;
+    if (el.scrollLeft < lowerBound) {
+      el.scrollLeft += singleSetWidth;
+    } else if (el.scrollLeft > upperBound) {
+      el.scrollLeft -= singleSetWidth;
     }
 
     updateCenter();
