@@ -61,12 +61,15 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
     setCenterIndex(Math.max(0, Math.min(idx, repeated.length - 1)));
   }, [filteredConsoles.length, repeated.length, itemWidth, step]);
 
+  const totalSets = Math.ceil(repeated.length / Math.max(filteredConsoles.length, 1));
+  const middleSet = Math.floor(totalSets / 2);
+
   const scrollToMiddle = useCallback(() => {
     const el = scrollRef.current;
     if (!el || filteredConsoles.length === 0) return;
-    const middleStart = filteredConsoles.length * 2;
+    const middleStart = middleSet * filteredConsoles.length;
     el.scrollLeft = middleStart * step - el.clientWidth / 2 + itemWidth / 2;
-  }, [filteredConsoles.length, step, itemWidth]);
+  }, [filteredConsoles.length, step, itemWidth, middleSet]);
 
   useEffect(() => {
     requestAnimationFrame(() => {
