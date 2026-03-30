@@ -7,75 +7,99 @@ interface ConsoleGridProps {
   selectedCategory: string;
 }
 
+const useResponsiveItemWidth = () => {
+  const [itemWidth, setItemWidth] = useState(160);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 400) setItemWidth(130);
+      else if (w < 640) setItemWidth(145);
+      else if (w < 768) setItemWidth(155);
+      else if (w < 1024) setItemWidth(165);
+      else setItemWidth(180);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  return itemWidth;
+};
+
+const GAP = 16;
+
 const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [centerIndex, setCenterIndex] = useState(-1);
-  const itemWidth = 180;
-  const gap = 16;
+  const itemWidth = useResponsiveItemWidth();
+  const step = itemWidth + GAP;
 
   const filteredConsoles = useMemo(() => {
-    return consoles.filter((console) => {
-      if (console.id === 'webrcade-huehue') {
-        return selectedCategory === 'all';
-      }
-      return selectedCategory === 'all' || console.category === selectedCategory;
+    return consoles.filter((c) => {
+      if (c.id === 'webrcade-huehue') return selectedCategory === 'all';
+      return selectedCategory === 'all' || c.category === selectedCategory;
     });
   }, [selectedCategory]);
 
-  // 5x copies for seamless infinite scroll
   const repeated = useMemo(() => {
     const copies = [];
     for (let i = 0; i < 5; i++) copies.push(...filteredConsoles);
     return copies;
   }, [filteredConsoles]);
 
-  const scrollToMiddle = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el || filteredConsoles.length === 0) return;
-    const middleStart = filteredConsoles.length * 2;
-    const scrollPos = middleStart * (itemWidth + gap) - el.clientWidth / 2 + itemWidth / 2;
-    el.scrollLeft = scrollPos;
-  }, [filteredConsoles.length]);
-
-  useEffect(() => {
-    // Use requestAnimationFrame to ensure DOM is ready
-    requestAnimationFrame(() => {
-      scrollToMiddle();
-      updateCenter();
-    });
-  }, [scrollToMiddle, selectedCategory]);
-
   const updateCenter = useCallback(() => {
     const el = scrollRef.current;
     if (!el || filteredConsoles.length === 0) return;
     const containerCenter = el.scrollLeft + el.clientWidth / 2;
-    const idx = Math.round(containerCenter / (itemWidth + gap));
-    setCenterIndex(idx);
-  }, [filteredConsoles.length]);
+    const idx = Math.round((containerCenter - itemWidth / 2) / step);
+    setCenterIndex(Math.max(0, Math.min(idx, repeated.length - 1)));
+  }, [filteredConsoles.length, repeated.length, itemWidth, step]);
 
-  // Seamless infinite loop: when reaching edges, jump to middle copy
+  const scrollToMiddle = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el || filteredConsoles.length === 0) return;
+    const middleStart = filteredConsoles.length * 2;
+    el.scrollLeft = middleStart * step - el.clientWidth / 2 + itemWidth / 2;
+  }, [filteredConsoles.length, step, itemWidth]);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      scrollToMiddle();
+      requestAnimationFrame(updateCenter);
+    });
+  }, [scrollToMiddle, updateCenter, selectedCategory]);
+
+  // Also recenter on resize
+  useEffect(() => {
+    const onResize = () => {
+      scrollToMiddle();
+      requestAnimationFrame(updateCenter);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [scrollToMiddle, updateCenter]);
+
   const handleScroll = useCallback(() => {
     const el = scrollRef.current;
     if (!el || filteredConsoles.length === 0) return;
 
-    const singleSetWidth = filteredConsoles.length * (itemWidth + gap);
-    const minBound = singleSetWidth;
-    const maxBound = singleSetWidth * 4;
+    const singleSetWidth = filteredConsoles.length * step;
 
-    if (el.scrollLeft < minBound) {
+    if (el.scrollLeft < singleSetWidth) {
       el.scrollLeft += singleSetWidth * 2;
-    } else if (el.scrollLeft > maxBound) {
+    } else if (el.scrollLeft > singleSetWidth * 4) {
       el.scrollLeft -= singleSetWidth * 2;
     }
 
     updateCenter();
-  }, [filteredConsoles.length, updateCenter]);
+  }, [filteredConsoles.length, step, updateCenter]);
 
   const scroll = useCallback((direction: 'left' | 'right') => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: direction === 'left' ? -(itemWidth + gap) : (itemWidth + gap), behavior: 'smooth' });
-  }, []);
+    el.scrollBy({ left: direction === 'left' ? -step : step, behavior: 'smooth' });
+  }, [step]);
 
   if (filteredConsoles.length === 0) {
     return (
@@ -92,19 +116,19 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
       {/* Left Arrow */}
       <button
         onClick={() => scroll('left')}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-card/90 border border-primary/30 hover:border-primary hover:shadow-neon rounded-full p-2 text-primary transition-all duration-300 opacity-70 hover:opacity-100"
+        className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 z-20 bg-card/90 border border-primary/30 hover:border-primary hover:shadow-neon rounded-full p-1.5 md:p-2 text-primary transition-all duration-300 opacity-70 hover:opacity-100"
         aria-label="Rolar para esquerda"
       >
-        <ChevronLeft className="w-5 h-5" />
+        <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
       </button>
 
       {/* Carousel */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex overflow-x-scroll px-10 py-6"
+        className="flex overflow-x-scroll py-6 px-6 md:px-10"
         style={{
-          gap: `${gap}px`,
+          gap: `${GAP}px`,
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -115,12 +139,13 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
           return (
             <div
               key={`${console.id}-${index}`}
-              className="flex-shrink-0 transition-transform duration-300 ease-out"
+              className="flex-shrink-0 transition-all duration-300 ease-out"
               style={{
                 width: `${itemWidth}px`,
-                transform: isCenter ? 'scale(1.18)' : 'scale(0.92)',
+                transform: isCenter ? 'scale(1.15)' : 'scale(0.9)',
                 zIndex: isCenter ? 10 : 1,
-                opacity: isCenter ? 1 : 0.7,
+                opacity: isCenter ? 1 : 0.6,
+                filter: isCenter ? 'drop-shadow(0 0 12px hsl(142 76% 46% / 0.4))' : 'none',
               }}
             >
               <ConsoleCard console={console} index={index % filteredConsoles.length} />
@@ -132,10 +157,10 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
       {/* Right Arrow */}
       <button
         onClick={() => scroll('right')}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-card/90 border border-primary/30 hover:border-primary hover:shadow-neon rounded-full p-2 text-primary transition-all duration-300 opacity-70 hover:opacity-100"
+        className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 z-20 bg-card/90 border border-primary/30 hover:border-primary hover:shadow-neon rounded-full p-1.5 md:p-2 text-primary transition-all duration-300 opacity-70 hover:opacity-100"
         aria-label="Rolar para direita"
       >
-        <ChevronRight className="w-5 h-5" />
+        <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
       </button>
     </div>
   );
