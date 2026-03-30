@@ -28,10 +28,12 @@ const useResponsiveItemWidth = () => {
 };
 
 const GAP = 16;
+const COPIES = 20; // Many copies for seamless looping
 
 const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [centerIndex, setCenterIndex] = useState(-1);
+  const isRepositioning = useRef(false);
   const itemWidth = useResponsiveItemWidth();
   const step = itemWidth + GAP;
 
@@ -42,47 +44,57 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
     });
   }, [selectedCategory]);
 
+  const count = filteredConsoles.length;
+
   const repeated = useMemo(() => {
-    if (filteredConsoles.length === 0) return [];
-    // Ensure we have enough items to fill the screen many times over
-    const minItems = Math.max(50, filteredConsoles.length * 5);
-    const copies = [];
-    while (copies.length < minItems) {
-      copies.push(...filteredConsoles);
+    if (count === 0) return [];
+    const arr = [];
+    for (let i = 0; i < COPIES; i++) {
+      arr.push(...filteredConsoles);
     }
-    return copies;
-  }, [filteredConsoles]);
+    return arr;
+  }, [filteredConsoles, count]);
+
+  const singleSetWidth = count * step;
+  const middleCopy = Math.floor(COPIES / 2);
 
   const updateCenter = useCallback(() => {
     const el = scrollRef.current;
-    if (!el || filteredConsoles.length === 0) return;
+    if (!el || count === 0) return;
     const containerCenter = el.scrollLeft + el.clientWidth / 2;
     const idx = Math.round((containerCenter - itemWidth / 2) / step);
     setCenterIndex(Math.max(0, Math.min(idx, repeated.length - 1)));
-  }, [filteredConsoles.length, repeated.length, itemWidth, step]);
+  }, [count, repeated.length, itemWidth, step]);
 
-  const totalSets = Math.ceil(repeated.length / Math.max(filteredConsoles.length, 1));
-  const middleSet = Math.floor(totalSets / 2);
-
+  // Position scroll to the middle set
   const scrollToMiddle = useCallback(() => {
     const el = scrollRef.current;
-    if (!el || filteredConsoles.length === 0) return;
-    const middleStart = middleSet * filteredConsoles.length;
+    if (!el || count === 0) return;
+    const middleStart = middleCopy * count;
     el.scrollLeft = middleStart * step - el.clientWidth / 2 + itemWidth / 2;
-  }, [filteredConsoles.length, step, itemWidth, middleSet]);
+  }, [count, step, itemWidth, middleCopy]);
 
+  // Initialize position on category change
   useEffect(() => {
+    isRepositioning.current = true;
     requestAnimationFrame(() => {
       scrollToMiddle();
-      requestAnimationFrame(updateCenter);
+      requestAnimationFrame(() => {
+        updateCenter();
+        isRepositioning.current = false;
+      });
     });
   }, [scrollToMiddle, updateCenter, selectedCategory]);
 
-  // Also recenter on resize
+  // Recenter on resize
   useEffect(() => {
     const onResize = () => {
+      isRepositioning.current = true;
       scrollToMiddle();
-      requestAnimationFrame(updateCenter);
+      requestAnimationFrame(() => {
+        updateCenter();
+        isRepositioning.current = false;
+      });
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
@@ -90,20 +102,28 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
 
   const handleScroll = useCallback(() => {
     const el = scrollRef.current;
-    if (!el || filteredConsoles.length === 0) return;
-
-    const singleSetWidth = filteredConsoles.length * step;
-    const lowerBound = singleSetWidth * (middleSet - 1);
-    const upperBound = singleSetWidth * (middleSet + 1);
-
-    if (el.scrollLeft < lowerBound) {
-      el.scrollLeft += singleSetWidth;
-    } else if (el.scrollLeft > upperBound) {
-      el.scrollLeft -= singleSetWidth;
-    }
+    if (!el || count === 0 || isRepositioning.current) return;
 
     updateCenter();
-  }, [filteredConsoles.length, step, updateCenter]);
+
+    // Seamless repositioning: when user scrolls too far from center,
+    // jump by exactly one set width (invisible since content repeats)
+    const currentPos = el.scrollLeft;
+    const centerPos = middleCopy * singleSetWidth;
+    const threshold = singleSetWidth * 3; // Allow 3 sets of drift before repositioning
+
+    if (Math.abs(currentPos - centerPos) > threshold) {
+      isRepositioning.current = true;
+      // Calculate how many full sets we've drifted
+      const drift = currentPos - centerPos;
+      const setsToCorrect = Math.round(drift / singleSetWidth);
+      el.scrollLeft = currentPos - setsToCorrect * singleSetWidth;
+      requestAnimationFrame(() => {
+        updateCenter();
+        isRepositioning.current = false;
+      });
+    }
+  }, [count, singleSetWidth, middleCopy, updateCenter]);
 
   const scroll = useCallback((direction: 'left' | 'right') => {
     const el = scrollRef.current;
@@ -158,7 +178,7 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
                 filter: isCenter ? 'drop-shadow(0 0 12px hsl(142 76% 46% / 0.4))' : 'none',
               }}
             >
-              <ConsoleCard console={console} index={index % filteredConsoles.length} />
+              <ConsoleCard console={console} index={index % count} />
             </div>
           );
         })}
