@@ -43,8 +43,13 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   }, [selectedCategory]);
 
   const repeated = useMemo(() => {
+    if (filteredConsoles.length === 0) return [];
+    // Ensure we have enough items to fill the screen many times over
+    const minItems = Math.max(50, filteredConsoles.length * 5);
     const copies = [];
-    for (let i = 0; i < 5; i++) copies.push(...filteredConsoles);
+    while (copies.length < minItems) {
+      copies.push(...filteredConsoles);
+    }
     return copies;
   }, [filteredConsoles]);
 
