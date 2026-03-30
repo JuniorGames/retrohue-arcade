@@ -10,32 +10,28 @@ const ConsoleCard = ({ console: consoleData, index }: ConsoleCardProps) => {
   return (
     <a
       href={consoleData.listUrl}
-      className="group card-retro rounded-xl p-4 md:p-6 flex flex-col items-center text-center cursor-pointer animate-fade-in w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.5rem)] md:w-[calc(25%-1rem)] lg:w-[calc(20%-1rem)] xl:w-[calc(16.666%-1rem)]"
+      className="group card-retro rounded-xl p-4 flex flex-col items-center text-center cursor-pointer animate-fade-in w-full h-full"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
-      {/* Console Icon */}
-      <div className="relative mb-4">
+      <div className="relative mb-3">
         <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <img
           src={consoleData.icon}
           alt={consoleData.name}
-          className="console-icon w-16 h-16 md:w-20 md:h-20 object-contain relative z-10"
+          className="console-icon w-14 h-14 md:w-16 md:h-16 object-contain relative z-10"
           loading="lazy"
         />
       </div>
 
-      {/* Console Name */}
-      <h3 className="font-arcade text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+      <h3 className="font-arcade text-xs md:text-sm font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
         {consoleData.name}
       </h3>
 
-      {/* Category Badge */}
-      <span className="text-xs text-muted-foreground capitalize px-2 py-1 rounded-full bg-muted/50">
+      <span className="text-[10px] text-muted-foreground capitalize px-2 py-0.5 rounded-full bg-muted/50">
         {consoleData.category === 'handheld' ? 'Portátil' : consoleData.category}
       </span>
 
-      {/* Hover indicator */}
-      <div className="mt-4 flex items-center gap-1 text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="mt-3 flex items-center gap-1 text-primary opacity-0 group-hover:opacity-100 transition-opacity">
         <span className="text-xs font-medium">Ver jogos</span>
         <ExternalLink className="w-3 h-3" />
       </div>
