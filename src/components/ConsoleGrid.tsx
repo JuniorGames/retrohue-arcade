@@ -100,21 +100,36 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
     return () => window.removeEventListener('resize', onResize);
   }, [scrollToMiddle, updateCenter]);
 
+  // Snap to nearest item center after scrolling stops
+  const snapTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const snapToNearest = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el || count === 0) return;
+    const containerCenter = el.scrollLeft + el.clientWidth / 2;
+    const nearestIdx = Math.round((containerCenter - itemWidth / 2) / step);
+    const targetScroll = nearestIdx * step - el.clientWidth / 2 + itemWidth / 2;
+    isRepositioning.current = true;
+    el.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    setTimeout(() => {
+      updateCenter();
+      isRepositioning.current = false;
+    }, 350);
+  }, [count, itemWidth, step, updateCenter]);
+
   const handleScroll = useCallback(() => {
     const el = scrollRef.current;
     if (!el || count === 0 || isRepositioning.current) return;
 
     updateCenter();
 
-    // Seamless repositioning: when user scrolls too far from center,
-    // jump by exactly one set width (invisible since content repeats)
+    // Seamless repositioning
     const currentPos = el.scrollLeft;
     const centerPos = middleCopy * singleSetWidth;
-    const threshold = singleSetWidth * 3; // Allow 3 sets of drift before repositioning
+    const threshold = singleSetWidth * 3;
 
     if (Math.abs(currentPos - centerPos) > threshold) {
       isRepositioning.current = true;
-      // Calculate how many full sets we've drifted
       const drift = currentPos - centerPos;
       const setsToCorrect = Math.round(drift / singleSetWidth);
       el.scrollLeft = currentPos - setsToCorrect * singleSetWidth;
@@ -123,13 +138,50 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
         isRepositioning.current = false;
       });
     }
-  }, [count, singleSetWidth, middleCopy, updateCenter]);
+
+    // Debounced snap
+    if (snapTimeout.current) clearTimeout(snapTimeout.current);
+    snapTimeout.current = setTimeout(snapToNearest, 150);
+  }, [count, singleSetWidth, middleCopy, updateCenter, snapToNearest]);
+
+  // Mouse wheel → horizontal scroll (down=left, up=right)
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY === 0) return;
+      e.preventDefault();
+      // Scroll by exactly one step per wheel tick for snap feel
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const containerCenter = el.scrollLeft + el.clientWidth / 2;
+      const currentIdx = Math.round((containerCenter - itemWidth / 2) / step);
+      const targetIdx = currentIdx + direction;
+      const targetScroll = targetIdx * step - el.clientWidth / 2 + itemWidth / 2;
+      isRepositioning.current = true;
+      el.scrollTo({ left: targetScroll, behavior: 'smooth' });
+      setTimeout(() => {
+        updateCenter();
+        isRepositioning.current = false;
+      }, 350);
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [itemWidth, step, updateCenter]);
 
   const scroll = useCallback((direction: 'left' | 'right') => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: direction === 'left' ? -step : step, behavior: 'smooth' });
-  }, [step]);
+    const containerCenter = el.scrollLeft + el.clientWidth / 2;
+    const currentIdx = Math.round((containerCenter - itemWidth / 2) / step);
+    const targetIdx = currentIdx + (direction === 'left' ? -1 : 1);
+    const targetScroll = targetIdx * step - el.clientWidth / 2 + itemWidth / 2;
+    isRepositioning.current = true;
+    el.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    setTimeout(() => {
+      updateCenter();
+      isRepositioning.current = false;
+    }, 350);
+  }, [step, itemWidth, updateCenter]);
 
   if (filteredConsoles.length === 0) {
     return (
