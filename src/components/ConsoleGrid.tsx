@@ -176,6 +176,7 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
                 zIndex: isCenter ? 10 : 1,
                 opacity: isCenter ? 1 : 0.6,
                 filter: isCenter ? 'drop-shadow(0 0 12px hsl(142 76% 46% / 0.4))' : 'none',
+                pointerEvents: isCenter ? 'auto' : 'none',
               }}
             >
               <ConsoleCard console={console} index={index % count} />
