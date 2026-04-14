@@ -197,14 +197,15 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
           return (
             <div
               key={`${console.id}-${index}`}
-              className="flex-shrink-0 transition-all duration-300 ease-out"
+              className="flex-shrink-0"
               style={{
                 width: `${itemWidth}px`,
-                transform: isCenter ? 'scale(1.15)' : 'scale(0.9)',
+                transform: isCenter ? 'scale(1.18)' : 'scale(0.82)',
                 zIndex: isCenter ? 10 : 1,
-                opacity: isCenter ? 1 : 0.6,
-                filter: isCenter ? 'drop-shadow(0 0 12px hsl(142 76% 46% / 0.4))' : 'none',
+                opacity: isCenter ? 1 : 0.45,
+                filter: isCenter ? 'drop-shadow(0 0 14px hsl(142 76% 46% / 0.45))' : 'brightness(0.7)',
                 pointerEvents: isCenter ? 'auto' : 'none',
+                transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
               <ConsoleCard console={console} index={index % count} />
