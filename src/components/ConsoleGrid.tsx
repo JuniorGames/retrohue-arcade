@@ -28,14 +28,15 @@ const useResponsiveItemWidth = () => {
 };
 
 const GAP = 16;
-const COPIES = 20; // Many copies for seamless looping
+const COPIES = 20;
 
 const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [centerIndex, setCenterIndex] = useState(-1);
-  const isRepositioning = useRef(false);
+  const [currentIndex, setCurrentIndex] = useState(0); // index within filteredConsoles
+  const isAnimating = useRef(false);
   const itemWidth = useResponsiveItemWidth();
   const step = itemWidth + GAP;
+  const touchStartX = useRef<number | null>(null);
 
   const filteredConsoles = useMemo(() => {
     return consoles.filter((c) => {
@@ -55,133 +56,111 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
     return arr;
   }, [filteredConsoles, count]);
 
-  const singleSetWidth = count * step;
   const middleCopy = Math.floor(COPIES / 2);
 
-  const updateCenter = useCallback(() => {
+  // Get the absolute index in the repeated array for the current selection
+  const getAbsoluteIndex = useCallback((relIndex: number) => {
+    return middleCopy * count + relIndex;
+  }, [middleCopy, count]);
+
+  // Scroll to position an absolute index at center
+  const scrollToIndex = useCallback((absIdx: number, smooth = true) => {
     const el = scrollRef.current;
     if (!el || count === 0) return;
-    const containerCenter = el.scrollLeft + el.clientWidth / 2;
-    const idx = Math.round((containerCenter - itemWidth / 2) / step);
-    setCenterIndex(Math.max(0, Math.min(idx, repeated.length - 1)));
-  }, [count, repeated.length, itemWidth, step]);
+    const targetScroll = absIdx * step - el.clientWidth / 2 + itemWidth / 2;
+    if (smooth) {
+      el.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    } else {
+      el.scrollLeft = targetScroll;
+    }
+  }, [count, step, itemWidth]);
 
-  // Position scroll to the middle set
-  const scrollToMiddle = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el || count === 0) return;
-    const middleStart = middleCopy * count;
-    el.scrollLeft = middleStart * step - el.clientWidth / 2 + itemWidth / 2;
-  }, [count, step, itemWidth, middleCopy]);
+  // Navigate by direction
+  const navigate = useCallback((direction: number) => {
+    if (isAnimating.current || count === 0) return;
+    isAnimating.current = true;
 
-  // Initialize position on category change
-  useEffect(() => {
-    isRepositioning.current = true;
-    requestAnimationFrame(() => {
-      scrollToMiddle();
-      requestAnimationFrame(() => {
-        updateCenter();
-        isRepositioning.current = false;
-      });
+    setCurrentIndex(prev => {
+      const next = ((prev + direction) % count + count) % count;
+      const absIdx = getAbsoluteIndex(next);
+      scrollToIndex(absIdx, true);
+      return next;
     });
-  }, [scrollToMiddle, updateCenter, selectedCategory]);
+
+    setTimeout(() => {
+      isAnimating.current = false;
+    }, 400);
+  }, [count, getAbsoluteIndex, scrollToIndex]);
+
+  // Initialize on category change
+  useEffect(() => {
+    setCurrentIndex(0);
+    requestAnimationFrame(() => {
+      const absIdx = middleCopy * count;
+      scrollToIndex(absIdx, false);
+    });
+  }, [selectedCategory, count, middleCopy, scrollToIndex]);
 
   // Recenter on resize
   useEffect(() => {
     const onResize = () => {
-      isRepositioning.current = true;
-      scrollToMiddle();
-      requestAnimationFrame(() => {
-        updateCenter();
-        isRepositioning.current = false;
-      });
+      const absIdx = getAbsoluteIndex(currentIndex);
+      scrollToIndex(absIdx, false);
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, [scrollToMiddle, updateCenter]);
+  }, [currentIndex, getAbsoluteIndex, scrollToIndex]);
 
-  // Snap to nearest item center after scrolling stops
-  const snapTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const snapToNearest = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el || count === 0) return;
-    const containerCenter = el.scrollLeft + el.clientWidth / 2;
-    const nearestIdx = Math.round((containerCenter - itemWidth / 2) / step);
-    const targetScroll = nearestIdx * step - el.clientWidth / 2 + itemWidth / 2;
-    isRepositioning.current = true;
-    el.scrollTo({ left: targetScroll, behavior: 'smooth' });
-    setTimeout(() => {
-      updateCenter();
-      isRepositioning.current = false;
-    }, 350);
-  }, [count, itemWidth, step, updateCenter]);
-
-  const handleScroll = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el || count === 0 || isRepositioning.current) return;
-
-    updateCenter();
-
-    // Seamless repositioning
-    const currentPos = el.scrollLeft;
-    const centerPos = middleCopy * singleSetWidth;
-    const threshold = singleSetWidth * 3;
-
-    if (Math.abs(currentPos - centerPos) > threshold) {
-      isRepositioning.current = true;
-      const drift = currentPos - centerPos;
-      const setsToCorrect = Math.round(drift / singleSetWidth);
-      el.scrollLeft = currentPos - setsToCorrect * singleSetWidth;
-      requestAnimationFrame(() => {
-        updateCenter();
-        isRepositioning.current = false;
-      });
-    }
-
-    // Debounced snap
-    if (snapTimeout.current) clearTimeout(snapTimeout.current);
-    snapTimeout.current = setTimeout(snapToNearest, 150);
-  }, [count, singleSetWidth, middleCopy, updateCenter, snapToNearest]);
-
-  // Mouse wheel → horizontal scroll (down=left, up=right)
+  // Mouse wheel → step navigation
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
       if (e.deltaY === 0) return;
       e.preventDefault();
-      // Scroll by exactly one step per wheel tick for snap feel
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const containerCenter = el.scrollLeft + el.clientWidth / 2;
-      const currentIdx = Math.round((containerCenter - itemWidth / 2) / step);
-      const targetIdx = currentIdx + direction;
-      const targetScroll = targetIdx * step - el.clientWidth / 2 + itemWidth / 2;
-      isRepositioning.current = true;
-      el.scrollTo({ left: targetScroll, behavior: 'smooth' });
-      setTimeout(() => {
-        updateCenter();
-        isRepositioning.current = false;
-      }, 350);
+      navigate(e.deltaY > 0 ? 1 : -1);
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
-  }, [itemWidth, step, updateCenter]);
+  }, [navigate]);
 
-  const scroll = useCallback((direction: 'left' | 'right') => {
+  // Touch swipe → step navigation (disable free scroll)
+  useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const containerCenter = el.scrollLeft + el.clientWidth / 2;
-    const currentIdx = Math.round((containerCenter - itemWidth / 2) / step);
-    const targetIdx = currentIdx + (direction === 'left' ? -1 : 1);
-    const targetScroll = targetIdx * step - el.clientWidth / 2 + itemWidth / 2;
-    isRepositioning.current = true;
-    el.scrollTo({ left: targetScroll, behavior: 'smooth' });
-    setTimeout(() => {
-      updateCenter();
-      isRepositioning.current = false;
-    }, 350);
-  }, [step, itemWidth, updateCenter]);
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartX.current = e.touches[0].clientX;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // prevent free scroll
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (touchStartX.current === null) return;
+      const diff = touchStartX.current - e.changedTouches[0].clientX;
+      touchStartX.current = null;
+      if (Math.abs(diff) > 30) {
+        navigate(diff > 0 ? 1 : -1);
+      }
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [navigate]);
+
+  // Prevent native scroll completely
+  const handleScroll = useCallback(() => {
+    // Do nothing - all navigation is controlled via navigate()
+  }, []);
+
+  // The center absolute index
+  const centerAbsIndex = getAbsoluteIndex(currentIndex);
 
   if (filteredConsoles.length === 0) {
     return (
@@ -195,29 +174,26 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
 
   return (
     <div className="relative group/carousel">
-      {/* Left Arrow */}
       <button
-        onClick={() => scroll('left')}
+        onClick={() => navigate(-1)}
         className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 z-20 bg-card/90 border border-primary/30 hover:border-primary hover:shadow-neon rounded-full p-1.5 md:p-2 text-primary transition-all duration-300 opacity-70 hover:opacity-100"
         aria-label="Rolar para esquerda"
       >
         <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
       </button>
 
-      {/* Carousel */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex overflow-x-scroll py-6 px-6 md:px-10"
+        className="flex overflow-x-hidden py-6 px-6 md:px-10"
         style={{
           gap: `${GAP}px`,
-          WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
         }}
       >
         {repeated.map((console, index) => {
-          const isCenter = index === centerIndex;
+          const isCenter = index === centerAbsIndex;
           return (
             <div
               key={`${console.id}-${index}`}
@@ -237,9 +213,8 @@ const ConsoleGrid = ({ selectedCategory }: ConsoleGridProps) => {
         })}
       </div>
 
-      {/* Right Arrow */}
       <button
-        onClick={() => scroll('right')}
+        onClick={() => navigate(1)}
         className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 z-20 bg-card/90 border border-primary/30 hover:border-primary hover:shadow-neon rounded-full p-1.5 md:p-2 text-primary transition-all duration-300 opacity-70 hover:opacity-100"
         aria-label="Rolar para direita"
       >
